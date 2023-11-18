@@ -1,0 +1,14 @@
+dist/
+build/
+.parcel-cache/
+node_modules/
+gitpush.sh~
+/.babelrc~
+*.blend1
+dist/*
+app/*
+.cache/*
+3D-Models-Internet/
+TextureSources/*
+__pycache__
+package-lock.json
