@@ -1,26 +1,18 @@
 {
-    "name": "blueprint3d-js",
+    "name": "aifast",
     "version": "3.0.1",
-    "description": "This is the core framework of Blueprint-js for creating floorplans in 2d and 3d",
+    "description": "aifast",
     "scripts": {
-        "start": "nodemon server.js",
-        "app-dev": "parcel src/index.html --dist-dir app/",
-        "for-git-demo-dev": "parcel src/index.html --dist-dir demo/ --public-url ./",
-        "app-production": "parcel build src/index.html --dist-dir app/ --no-source-maps --experimental-scope-hoisting",
-        "for-git-demo-production": "parcel build src/index.html --dist-dir demo/ --no-source-maps --public-url https://aalavandhaann.github.io/blueprint-js/demo/  --no-content-hash",
-        "frameworkonly-dev": "parcel build src/scripts/blueprint.js --global BP3DJS --no-source-maps --dist-dir bin/ --target browser --out-file bp3djs.js  --no-optimize  --no-content-hash",
-        "frameworkonly-production": "parcel build src/scripts/blueprint.js  --global BP3DJS --no-source-maps --dist-dir bin/ --target browser --out-file bp3djs.js  --no-content-hash",
-        "docs": "esdoc",
-        "rollup": "rollup -c \"rollup_config.js\" "
+        "start": "nodemon server.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+ssh://git@github.com/aalavandhaann/blueprint-js.git"
+        "url": ""
     },
-    "author": "#0K Srinivasan <ashok.srinivasan2002@gmail.com> (@aalavandhaann)",
-    "license": "ISC",
+    "author": "",
+    "license": "",
     "bugs": {
-        "url": "https://github.com/aalavandhaann/blueprint-js/issues"
+        "url": "https://github.com/mayman/blueprint-js/issues"
     },
     "dependencies": {
         "@emotion/react": "^11.11.1",
@@ -49,27 +41,17 @@
         "http": "^0.0.1-security",
         "jszip": "^3.5.0",
         "line-intersect": "^2.2.1",
-        "mongodb": "^6.1.0",
-        "mongoose": "^7.5.3",
         "node-gyp": "^9.0.0",
-        "nodemon": "^3.0.1",
-        "pixi-viewport": "^4.18.0",
-        "pixi.js": "^6.4.2",
-        "point-in-polygon": "^1.1.0",
-        "quicksettings": "^3.0.1",
-        "three": "^0.158.0"
+        "nodemon": "^3.0.1"
     },
     "devDependencies": {
         "@babel/core": "^7.18.6",
         "@rollup/plugin-node-resolve": "14.0.1",
         "buffer": "^6.0.3",
         "events": "^3.3.0",
-        "parcel": "^2.6.2",
         "process": "^0.11.10",
         "punycode": "^1.4.1",
         "querystring-es3": "^0.2.1",
-        "rollup": "2.79.0",
-        "rollup-plugin-terser": "7.0.2",
         "stream-browserify": "^3.0.0"
     }
 }

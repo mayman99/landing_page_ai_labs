@@ -1,0 +1,12 @@
+runtime: nodejs16
+
+handlers:
+  - url: /favicon\.ico
+    static_files: public/favicon.ico
+    upload: public/favicon.ico
+
+  - url: /static
+    static_dir: public/assets
+
+  - url: /.*
+    script: auto

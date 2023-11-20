@@ -49,11 +49,13 @@ app.get('/robots.txt', function (req, res) {
 //     res.send(xml_content.join('\n'))
 //   })
 
+console.log(process.env.PORT);
 /* Start the Server */
 const server = http.createServer(app, (req,res) => {
     res.end("SSL ADDED");
 })
-.listen(3001, () => console.log("Server is Running"));
+.listen(process.env.PORT || 3000, () => console.log("Server is Running"));
+
 
 /* Render LandingPage */
 app.get("/", (req, res) => {
