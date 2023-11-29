@@ -174,3 +174,36 @@ function getCookie(name) {
   }
   return null;
 }
+
+// Set the target date and time
+var countDownDate = new Date();
+countDownDate.setUTCHours(14, 0, 0, 0);
+
+// Update the countdown every 1 second
+var countdownInterval = setInterval(function() {
+  // Get the current date and time
+  var now = new Date().getTime();
+
+  // Find the distance between now and the countdown date
+  var distance = countDownDate - now;
+
+  // If the countdown date is in the past, add 24 hours
+  if (distance < 0) {
+    countDownDate.setDate(countDownDate.getDate() + 1);
+    distance = countDownDate - now;
+  }
+
+  // Calculate hours, minutes, and seconds
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  // Display the result in the element with id="countdown"
+  document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+
+  // If the countdown is finished, write some text 
+  if (distance < 0) {
+    clearInterval(countdownInterval);
+    document.getElementById("countdown").innerHTML = "EXPIRED";
+  }
+}, 1000);
