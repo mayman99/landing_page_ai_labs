@@ -2,12 +2,50 @@
 <html lang="en">
 
 <head>
-  <title>Super Sat</title>
   <meta charset="utf-8">
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1P7S2X04DV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
+    gtag('config', 'G-MX701GTT1M');
+  </script>
+  <!-- Schema.org Markup for Rich Snippets -->
+  <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Resolution Boost",
+        "url": "https://www.resolutionboost.com",
+        "description": "ResolutionBoost - Elevate your visuals with high-quality image resolution enhancement. Specializing in upscaling for super big pictures and satellite imagery. Enhance clarity and detail for stunning results. Using AI to improve pictures super resolution.",
+        "keywords": "resolution enhancement, image upscaling, high-resolution images, picture clarity, satellite image enhancement, remote sensing imagery enhancement and boosting",
+        "image": "https://assets-global.website-files.com/609ed46055e27a02ffc0749b/63e283046102e525aae4fcc1_Mapbox%20satellite%20image%20-%20Sutter%20Buttes%2C%20California.png"
+    }
+</script>
+  <!-- Google tag (gtag.js) -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="ResolutionBoost - Elevate your visuals with high-quality image resolution enhancement. Specializing in upscaling for super big pictures and satellite imagery. Enhance clarity and detail for stunning results. Using AI to improve pictures super resolution.">
+  <meta name="keywords"
+    content="resolution enhancement, image upscaling, high-resolution images, picture clarity, satellite image enhancement, remote sensing imagery enhancement and boosting">
+  <meta name="author" content="Resolution Boost">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="ResolutionBoost - Elevate Image Resolution">
+  <meta property="og:description"
+    content="Explore ResolutionBoost for high-quality image resolution enhancement. Specializing in upscaling for super big pictures and satellite imagery. Enhance clarity and detail for stunning results.">
+  <meta property="og:image"
+    content="https://assets-global.website-files.com/609ed46055e27a02ffc0749b/63e283046102e525aae4fcc1_Mapbox%20satellite%20image%20-%20Sutter%20Buttes%2C%20California.png">
+  <meta property="og:url" content="https://www.resolutionboost.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ResolutionBoost - Elevate Image Resolution">
+  <meta name="twitter:description"
+    content="Explore ResolutionBoost for high-quality image resolution enhancement. Specializing in upscaling for super big pictures and satellite imagery. Enhance clarity and detail for stunning results.">
+  <meta name="twitter:image"
+    content="https://assets-global.website-files.com/609ed46055e27a02ffc0749b/63e283046102e525aae4fcc1_Mapbox%20satellite%20image%20-%20Sutter%20Buttes%2C%20California.png">
+  <title>ResolutionBoost - Image Resolution Enhancement</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href='https://fonts.googleapis.com/css?family=Indie Flower' rel='stylesheet'>
@@ -21,83 +59,148 @@
 
 <body>
   <nav class="navbar navbar-dark bg-success">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="#" style="margin-left: 5%;">
       <!-- <img src="/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""> -->
-      UltraClear
+      Resolution Boost
     </a>
   </nav>
   <div class="container">
 
     <div class="row p-3">
-      <h1 class="fs-1 text-center">Scale super giant images</h1>
+      <h1 class="fs-1 text-center">Boost Images Resolution</h1>
     </div>
+    <!-- <div class="row p-3">
+      <h2 class="fs-5 text-center text-muted">Enhancement and increase the resolution of satellite and remote imagery using state of the art AI algorithms</h2>
+    </div> -->
     <div class="row p-3">
-      <form action="/upload" id="uploadForm" method="post" enctype="multipart/form-data">
-        <div class="input-group mb-3">
-          <input id="upload-pattern-input" type="file" name="image" accept="*" class="form-control">
+      <div class="card">
+        <!-- <div class="card-header">
+        Inputs
+      </div> -->
+        <div class="card-body">
+          <h5 class="card-title">Upload image to get started</h5>
+          <!-- <p class="card-text">Upload image to get started</p> -->
+          <div class="row p-1">
+            <form action="/upload" id="uploadForm" method="post" enctype="multipart/form-data">
+              <div class="input-group mb-3">
+                <input id="upload-pattern-input" type="file" name="image" accept="*" class="form-control">
+              </div>
+              <p class="card-text"><small class="text-body-secondary">input limits: 1Gb and 100000x100000</small></p>
+            </form>
+          </div>
+          <div class="row p-1">
+            <p class="fs-3 text-left">Select the scaling factor to use</p>
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="2"
+                  checked>
+                <label class="form-check-label" for="inlineRadio1">2</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="3">
+                <label class="form-check-label" for="inlineRadio2">3</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="4">
+                <label class="form-check-label" for="inlineRadio3">4</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="8"
+                  disabled>
+                <label class="form-check-label" for="inlineRadio3">8</label>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </form>
-    </div>
-    <div class="row p-3">
-      <p class="fs-4 text-left">Select the scaling factor to use</p>
-      <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="2">
-          <label class="form-check-label" for="inlineRadio1">2</label>
+        <div class="row p-1">
+
+          <button class="btn btn-success btn-block btn-lg" type="button" id="texture_text_button"
+            onclick="fetchData()">Upload and
+            Scale</button>
         </div>
       </div>
-      <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="3">
-          <label class="form-check-label" for="inlineRadio2">3</label>
+    </div>
+
+    <!-- <div class="card">
+      <div class="card-header">
+      Inputs
+    </div>
+      <div class="card-body"> -->
+
+        <div class="row" id="processing_status_row" style="display: none;">
+          <p id="status" class="fs-1 text-center">Position in Queue: 1</p>
+          <div class="progress">
+            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
+              aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 1%" id="progress_bar"></div>
+          </div>
+        </div>
+
+        <div class="row p-3" id="results_row" style="display: none;">
+          <button class="btn btn-lg btn-success btn-block" id="download_btn" type="button" disabled>Download</button>
+          <a id="downloadLink" style="display: none;" download>
+          </a>
+        </div>
+
+        <div class="row text-center" id="example_row">
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card">
+              <img src="/assets/img/before_2.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="card d-flex align-items-center justify-content-center" style="height: 100%;">
+              <i class="fas fa-arrow-right fa-3x"></i>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card">
+              <img src="/assets/img/after_2.png" class="card-img-top" alt="...">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row p-3" id="coffee_row" style="display: none;">
+          <a href="https://www.buymeacoffee.com/lyth"><img
+              src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=lyth&button_colour=40DCA5&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
+        </div>
+        <div class="footer">
+          <div class="row p-3">
+            <div class="card-footer text-body-secondary text-center" style="margin-top: 40px;">
+              <a href="https://twitter.com/followtherobot_" target="_blank">
+                <i class="fab fa-twitter">@followtherobot_</i>
+              </a>
+              <span class="text-muted">|</span>
+              info@aifast.de
+            </div>
+          </div>
         </div>
       </div>
-      <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="4">
-          <label class="form-check-label" for="inlineRadio3">4</label>
-        </div>
-      </div>
-      <div class="col">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="8">
-          <label class="form-check-label" for="inlineRadio3">8</label>
-        </div>
-      </div>
-    </div>
-    <div class="row p-3">
-      <button class="btn btn-success btn-block btn-lg" type="button" id="texture_text_button"
-        onclick="fetchData()">Upload and
-        Scale</button>
 
-    </div>
+      <!-- Vendor JS Files -->
+      <script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+        data-id="lyth" data-description="Support me on Buy me a coffee!" data-message="Thank you for using"
+        data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+      <script src="assets/vendor/aos/aos.js"></script>
+      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+      <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+      <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+      <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+      <script src="assets/vendor/php-email-form/validate.js"></script>
 
-    <div class="row" id="processing_status_row" style="display: none;">
-      <p id="status" class="fs-1 text-center">Position in Queue: 1</p>
-      <div class="progress">
-        <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
-          aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 1%" id="progress_bar"></div>
-      </div>
-    </div>
-
-    <div class="row p-3" id="results_row" style="display: none;">
-      <button class="btn btn-lg btn-success btn-block" id="download_btn" type="button" disabled>Download</button>
-      <a id="downloadLink" style="display: none;" download>
-      </a>
-    </div>
-
-  </div>
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="assets/js/main.js"></script>
+      <!-- Template Main JS File -->
+      <script src="assets/js/main.js"></script>
 
 </body>
 

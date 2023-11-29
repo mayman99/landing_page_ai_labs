@@ -1,4 +1,7 @@
-const baseURL = "http://92.220.132.213:40045"
+// const baseURL = "http://92.220.132.213:40045"
+// const baseURL = "https://33e28384eb72c36777.gradio.live"
+// const baseURL = "http://localhost:7860"
+const baseURL = "https://bdb3-178-246-152-245.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
 const statusAPI = baseURL + "/sdapi/v1/progress";
 // progress bar
@@ -8,8 +11,10 @@ const download_btn = document.getElementById('download_btn');
 const downloadLink = document.getElementById('downloadLink');
 const processing_status_row = document.getElementById('processing_status_row');
 const results_row = document.getElementById('results_row');
+const coffee_row = document.getElementById('coffee_row');
 const scaling_factor_radio = document.getElementsByName('inlineRadioOptions');
-
+const example_row = document.getElementById('example_row');
+const example_image = document.getElementById('example_image');
 const status = ['Uploading', 'In Queue', 'Pre Processing', 'Scaling', 'Post Processing', 'Ready for Download'];
 let application_state = 0;
 
@@ -22,8 +27,9 @@ function clean() {
 
 async function fetchData() {
   application_state = 1;
+  example_row.style.display = 'none';
   // Start updating the status once the second HTTP POST call is made
-  console.log('Get status first called');
+  // console.log('Get status first called');
   getStatus();
   processing_status_row.style.display = 'block';
   const clientId = getCookie('client_id');
@@ -36,10 +42,10 @@ async function fetchData() {
   });
   const file_json = await response1.json();
 
-  console.log('Data from endpoint1:', file_json);
+  // console.log('Data from endpoint1:', file_json);
   const file_key = file_json.key;
-  var scale_factor = 2;
 
+  var scale_factor = 2;
   for (var i = 0, length = scaling_factor_radio.length; i < length; i++) {
     if (scaling_factor_radio[i].checked) {
       scale_factor = scaling_factor_radio[i].value;
@@ -52,14 +58,12 @@ async function fetchData() {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      "resize_mode": 1,
-      "show_extras_results": true,
-      "gfpgan_visibility": 0.005,
-      "codeformer_visibility": 0.005,
-      "codeformer_weight": 0.005,
+      "resize_mode": 0,
+      "show_extras_results": false,
+      "gfpgan_visibility": 0.02,
+      "codeformer_visibility": 0.02,
+      "codeformer_weight": 0,
       "upscaling_resize": scale_factor,
-      "upscaling_resize_w": 1024,
-      "upscaling_resize_h": 1024,
       "upscaling_crop": true,
       "upscaler_1": "R-ESRGAN 4x+",
       "upscaler_2": "R-ESRGAN 4x+",
@@ -74,13 +78,15 @@ async function fetchData() {
     }
     return response.json();
   }).then(data => {
-    console.log(data);
+    // console.log(data);
     results_row.style.display = 'block';
     if (data.imagePath) {
       const image_name = data.imagePath;
       const extensionIndex = image_name.lastIndexOf(".");
-      const newFileName = `${image_name.slice(0, extensionIndex)}_result.png`;
+      const newFileName = 'result_' + image_name.substring(0, extensionIndex) + '.png';
       downloadLink.href = '/download/' + newFileName;
+    }else{
+      statusText.innerHTML = 'Error occured please contact us';
     }
   }).catch(function() {
     console.log("Fetch error");
@@ -101,29 +107,32 @@ async function getStatus() {
       throw new Error(`HTTP error! status: ${response.status}`);
     } else {
       const data = await response.json();
-      console.log('Data from endpoint3:', data);
+      // console.log('Data from endpoint3:', data);
 
       if (data.client_position === -1){
         if (application_state === 1) {
-          console.log('Uploading');
+          // console.log('Uploading');
           statusText.innerHTML = 'Uploading';
           progressBar.style.width = '10%';
-          setTimeout(getStatus, 300);
+          setTimeout(getStatus, 400);
         } else if (application_state !== 0) {
           progressBar.style.width = '100%';
-          console.log('complete');
+          // console.log('complete');
           statusText.innerHTML = 'Ready for Download';
+          results_row.style.display = 'block';
           download_btn.disabled = false;
           application_state = 0;
         }
       } 
       else if (data.client_position === 0) {
-        console.log('Position in Queue is 0');
-        console.log('doing', data.state.job);
+
+        // console.log('Position in Queue is 0');
+        // console.log('doing', data.state.job);
         statusText.innerHTML = data.state.job;
         application_state = 2;
         if (data.state.job === 'Preprocessing') {
           progressBar.style.width = '25%';
+          coffee_row.style.display = 'block';
         }
         else if (data.state.job === 'Scaling') {
           progressBar.style.width = '40%';
@@ -133,14 +142,15 @@ async function getStatus() {
         }
         else if (data.state.job === 'Writting') {
           progressBar.style.width = '95%';
+          coffee_row.style.display = 'block';
         }
-        setTimeout(getStatus, 300);
+        setTimeout(getStatus, 400);
       } else {
         progressBar.style.width = '20%';
         statusText.innerHTML = 'Position in Queue is ' + data.client_position.toString();
-        console.log('Position in Queue is ', data.client_position);
+        // console.log('Position in Queue is ', data.client_position);
         application_state = 1;
-        setTimeout(getStatus, 300);
+        setTimeout(getStatus, 400);
       }
     }
   } catch (error) {
