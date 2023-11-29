@@ -3,8 +3,8 @@
 // const baseURL = "http://localhost:7860"
 const baseURL = "https://bdb3-178-246-152-245.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
+const upscalePreviewAPI = baseURL + "/sdapi/v1/upscale-preview";
 const statusAPI = baseURL + "/sdapi/v1/progress";
-// progress bar
 const progressBar = document.getElementById('progress_bar');
 const statusText = document.getElementById('status');
 const download_btn = document.getElementById('download_btn');
@@ -15,7 +15,7 @@ const coffee_row = document.getElementById('coffee_row');
 const scaling_factor_radio = document.getElementsByName('inlineRadioOptions');
 const example_row = document.getElementById('example_row');
 const example_image = document.getElementById('example_image');
-const status = ['Uploading', 'In Queue', 'Pre Processing', 'Scaling', 'Post Processing', 'Ready for Download'];
+let scaling_methods = ["R-ESRGAN 4x+", "Ulrasharp", "Anime6B"];
 let application_state = 0;
 
 // Clean everything to be ready for a second run
@@ -23,6 +23,60 @@ function clean() {
   download_btn.disabled = true;
   results_row.style.display = 'none';
   processing_status_row.style.display = 'none';
+}
+
+function selectScalingMethod() {
+  var selected_scaling_method = "";
+  for (var i = 0, length = scaling_methood_options.length; i < length; i++) {
+    if (scaling_methood_options[i].checked) {
+      selected_scaling_method = scaling_methods[scaling_factor_radio[i].value];
+      return selected_scaling_method;
+    }
+  }
+}
+
+function setScalingMethodsImages(){
+  // Invoke the post request for images previews
+  // Populate the scaling methods images section
+  fetch(upscaleAPI, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      "resize_mode": 0,
+      "show_extras_results": false,
+      "gfpgan_visibility": 0.02,
+      "codeformer_visibility": 0.02,
+      "codeformer_weight": 0,
+      "upscaling_resize": scale_factor,
+      "upscaling_crop": true,
+      "upscaler_1": "R-ESRGAN 4x+",
+      "upscaler_2": "R-ESRGAN 4x+",
+      "extras_upscaler_2_visibility": 0,
+      "upscale_first": false,
+      "imagePath": file_key,
+      "client_id": clientId
+    })
+  }).then(response => {
+    if (!response.ok) {
+      throw new Error("HTTP error " + response.status);
+    }
+    return response.json();
+  }).then(data => {
+    // console.log(data);
+    results_row.style.display = 'block';
+    if (data.imagePath) {
+      const image_name = data.imagePath;
+      const extensionIndex = image_name.lastIndexOf(".");
+      const newFileName = 'result_' + image_name.substring(0, extensionIndex) + '.png';
+      downloadLink.href = '/download/' + newFileName;
+    }else{
+      statusText.innerHTML = 'Error occured please contact us';
+    }
+  }).catch(function() {
+    console.log("Fetch error");
+  });
 }
 
 async function fetchData() {
