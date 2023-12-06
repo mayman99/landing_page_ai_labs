@@ -70,30 +70,9 @@
       <h1 class="fs-1 text-center">Boost Images Resolution</h1>
     </div>
     <div class="row p-3">
-      <h1 class="fs-5 text-center text-muted">Server under maintenance</h1>
-      <h3 class="fs-5 text-center text-muted">Up in:</h3>
+      <h1 class="fs-5 text-center text-muted">Upscaling huge images is currently disabled due to technical issues we are working on</h1>
+      <h3 class="fs-5 text-center text-muted">Should be up in:</h3>
       <div class="fs-5 text-center" id="countdown"></div>
-    </div>
-    <div class="row text-center" id="example_row">
-      <div class="col-lg-5 col-md-5 col-sm-12">
-        <div class="card">
-          <img src="/assets/img/before_2.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-12">
-        <div class="card d-flex align-items-center justify-content-center" style="height: 100%;">
-          <i class="fas fa-arrow-right fa-3x"></i>
-        </div>
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-12">
-        <div class="card">
-          <img src="/assets/img/after_2.png" class="card-img-top" alt="...">
-          <div class="card-body">
-          </div>
-        </div>
-      </div>
     </div>
     <div class="row p-3">
       <div class="card">
@@ -101,14 +80,21 @@
         Inputs
       </div> -->
         <div class="card-body">
-          <h5 class="card-title">Upload image to get started</h5>
           <!-- <p class="card-text">Upload image to get started</p> -->
           <div class="row p-1">
-            <form action="/upload" id="uploadForm" method="post" enctype="multipart/form-data">
+            <form action="/upload" id="uploadForm" method="post" enctype="multipart/form-data" onsubmit="return validateInput()">
+              <h5 class="card-title">The image is less than 40Mb and 4096x4096? Upload</h5>
               <div class="input-group mb-3">
-                <input id="upload-pattern-input" type="file" name="image" accept="*" class="form-control">
+                <input id="image_file" type="file" name="image" accept="*" class="form-control">
               </div>
-              <p class="card-text"><small class="text-body-secondary">input limits: 1Gb and 100000x100000</small></p>
+              <p class="card-text"><small class="text-body-secondary">input limits: 40Mb and 4096x4096</small></p>
+
+              <h5 class="card-title">For Images up to 1Gb and 64000x64000? Provide a link</h5>
+              <div class="input-group mb-3">
+                <input id="image_url" type="text" name="image_url" class="form-control" pattern="https?://.+" title="Please enter a valid URL" disabled>
+              </div>
+              <p class="card-text"><small class="text-body-secondary">input limits: 1Gb and 64000x64000</small></p>
+              <!-- <input type="submit" value="Submit"> -->
             </form>
           </div>
           <div class="row p-1">
@@ -145,7 +131,7 @@
         <div class="row p-1">
 
           <button class="btn btn-success btn-block btn-lg" type="button" id="texture_text_button"
-            onclick="fetchData()" disabled>Upload and
+            onclick="fetchData()">Upload and
             Scale</button>
         </div>
       </div>
@@ -174,6 +160,27 @@
         <div class="row p-3" id="coffee_row" style="display: none;">
           <a href="https://www.buymeacoffee.com/lyth"><img
               src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=☕&slug=lyth&button_colour=40DCA5&font_colour=ffffff&font_family=Cookie&outline_colour=000000&coffee_colour=FFDD00" /></a>
+        </div>
+        <div class="row text-center" id="example_row">
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card">
+              <img src="/assets/img/before_2.jpg" class="card-img-top" alt="...">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-12">
+            <div class="card d-flex align-items-center justify-content-center" style="height: 100%;">
+              <i class="fas fa-arrow-right fa-3x"></i>
+            </div>
+          </div>
+          <div class="col-lg-5 col-md-5 col-sm-12">
+            <div class="card">
+              <img src="/assets/img/after_2.png" class="card-img-top" alt="...">
+              <div class="card-body">
+              </div>
+            </div>
+          </div>
         </div>
         <div class="footer">
           <div class="row p-3">

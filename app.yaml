@@ -1,5 +1,10 @@
 runtime: nodejs16
 
+env_variables:
+  GOOGLE_CLOUD_PROJECT: 'supersat-406120'
+  GCLOUD_STORAGE_BUCKET: 'supersat-406120.appspot.com'
+
+
 handlers:
   - url: /favicon\.ico
     static_files: public/favicon.ico

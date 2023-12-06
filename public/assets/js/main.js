@@ -1,7 +1,7 @@
 // const baseURL = "http://92.220.132.213:40045"
-// const baseURL = "https://33e28384eb72c36777.gradio.live"
+// const baseURL = "https://d6910820daa95904e7.gradio.live"
 // const baseURL = "http://localhost:7860"
-const baseURL = "https://bdb3-178-246-152-245.ngrok-free.app"
+const baseURL = "https://ddb8-184-67-78-114.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
 const statusAPI = baseURL + "/sdapi/v1/progress";
 // progress bar
@@ -25,7 +25,35 @@ function clean() {
   processing_status_row.style.display = 'none';
 }
 
+function validateInput() {
+  const imageUrl = document.getElementById('image_url').value;
+  const imageFile = document.getElementById('image_file').value;
+
+  if (imageUrl && imageFile) {
+    alert('Please use only one input: URL or File');
+    return false;
+  }
+
+  if (!imageUrl && !imageFile) {
+    alert('Please provide either a URL or a File');
+    return false;
+  }
+
+  // Continue with form submission or processing
+  return true;
+}
+
 async function fetchData() {
+  // determine if the user is uploading an image or using an image url
+  const image_url = document.getElementById('image_url').value;
+  const image_file = document.getElementById('image_file').value;
+  // console.log(image_url, image_file);
+  if (image_url === '' && image_file === '') {
+    alert('Please enter an image url or upload an image');
+    return;
+  }
+  
+
   application_state = 1;
   example_row.style.display = 'none';
   // Start updating the status once the second HTTP POST call is made
@@ -70,6 +98,7 @@ async function fetchData() {
       "extras_upscaler_2_visibility": 0,
       "upscale_first": false,
       "imagePath": file_key,
+      "imageURL": image_url,
       "client_id": clientId
     })
   }).then(response => {
@@ -78,12 +107,14 @@ async function fetchData() {
     }
     return response.json();
   }).then(data => {
-    // console.log(data);
+    console.log(data);
     results_row.style.display = 'block';
     if (data.imagePath) {
       const image_name = data.imagePath;
-      const extensionIndex = image_name.lastIndexOf(".");
-      const newFileName = 'result_' + image_name.substring(0, extensionIndex) + '.png';
+      // const extensionIndex = image_name.lastIndexOf(".");
+      // const newFileName = 'result_' + image_name.substring(0, extensionIndex) + '.png';
+      // Download compress image/group of images
+      const newFileName = image_name + '.zip';
       downloadLink.href = '/download/' + newFileName;
     }else{
       statusText.innerHTML = 'Error occured please contact us';
@@ -177,7 +208,7 @@ function getCookie(name) {
 
 // Set the target date and time
 var countDownDate = new Date();
-countDownDate.setUTCHours(14, 0, 0, 0);
+countDownDate.setFullYear(2023, 11, 9);
 
 // Update the countdown every 1 second
 var countdownInterval = setInterval(function() {
@@ -187,19 +218,14 @@ var countdownInterval = setInterval(function() {
   // Find the distance between now and the countdown date
   var distance = countDownDate - now;
 
-  // If the countdown date is in the past, add 24 hours
-  if (distance < 0) {
-    countDownDate.setDate(countDownDate.getDate() + 1);
-    distance = countDownDate - now;
-  }
-
-  // Calculate hours, minutes, and seconds
+  // Calculate days, hours, minutes, and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="countdown"
-  document.getElementById("countdown").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
+  document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
   // If the countdown is finished, write some text 
   if (distance < 0) {
