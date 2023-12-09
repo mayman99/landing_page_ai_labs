@@ -34,24 +34,24 @@ saveUninitialized: false,
 })
 );
 
-// app.get('/robots.txt', function (req, res) {
-// res.type('text/plain');
-// res.send("User-agent: *\nAllow: /texture\nAllow: / ");
-// });
+app.get('/robots.txt', function (req, res) {
+res.type('text/plain');
+res.send("User-agent: *\nAllow: /texture\nAllow: / ");
+});
 
-// app.get('/sitemap.xml', async function(req, res, next){
-//     let xml_content = [
-// '<?xml version="1.0" encoding="UTF-8"?>',
-// '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-// '  <url>',
-// '    <loc>https://www.resolutionboost.com/</loc>',
-// '    <lastmod>2023-11-11</lastmod>',
-// '  </url>',
-// '</urlset>'
-// ]
-//     res.set('Content-Type', 'text/xml')
-// res.send(xml_content.join('\n'))
-// });
+app.get('/sitemap.xml', async function(req, res, next){
+    let xml_content = [
+'<?xml version="1.0" encoding="UTF-8"?>',
+'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+'  <url>',
+'    <loc>https://www.resolutionboost.com/</loc>',
+'    <lastmod>2023-11-11</lastmod>',
+'  </url>',
+'</urlset>'
+]
+    res.set('Content-Type', 'text/xml')
+res.send(xml_content.join('\n'))
+});
 
 /* Start the Server */
 const server = http.createServer(app, (req,res) => {

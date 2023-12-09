@@ -1,7 +1,7 @@
 // const baseURL = "http://92.220.132.213:40045"
 // const baseURL = "https://d6910820daa95904e7.gradio.live"
-const baseURL = "http://localhost:7860"
-// const baseURL = "https://ddb8-184-67-78-114.ngrok-free.app"
+// const baseURL = "http://localhost:7860"
+const baseURL = "https://2b4f-178-240-36-65.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
 const preUpscaleAPI = baseURL + "/sdapi/v1/upscale-preview";
 const statusAPI = baseURL + "/sdapi/v1/progress";
@@ -18,15 +18,24 @@ const coffee_row = document.getElementById('coffee_row');
 const scaling_factor_radio = document.getElementsByName('inlineRadioOptions');
 const example_row = document.getElementById('example_row');
 const example_image = document.getElementById('example_image');
+const upscale_button = document.getElementById('upscale_button');
+const preview_button = document.getElementById('preview_button');
+
 const status = ['Uploading', 'In Queue', 'Pre Processing', 'Scaling', 'Post Processing', 'Ready for Download'];
-const upscalers = ['R-ESRGAN 4x+', 'R-ESRGAN 4x+ Anime6B', 'ESRGAN_4x'];
+const upscalers = ['R-ESRGAN 4x+', 'R-ESRGAN 4x+ Anime6B', '4x-UltraSharp'];
 let application_state = 0;
+let file_key = '';
+let file_url = '';
+
 
 // Clean everything to be ready for a second run
 function clean() {
   download_btn.disabled = true;
   results_row.style.display = 'none';
   processing_status_row.style.display = 'none';
+  preview_button.style.display = 'block';
+  upscale_button.style.display = 'none';
+  preview_row.style.display = 'none';
 }
 
 function getCookie(name) {
@@ -82,8 +91,8 @@ function createImageComparisonSlider(image1, image2, index) {
 
   // Create the container and images
   let container = document.createElement('div');
-  container.style.width = '320px';
-  container.style.height = '256px';
+  container.style.width = '700px';
+  container.style.height = '400px';
   container.style.position = 'relative';
   container.style.overflow = 'hidden';
 
@@ -117,6 +126,8 @@ function createImageComparisonSlider(image1, image2, index) {
 
   // Set up the event listeners
   let isDragging = false;
+  let containerRect = container.getBoundingClientRect();
+  img2.style.clipPath = `inset(0 ${containerRect.width * 0.5}px 0 0)`;
 
   function handleMouseMove(e) {
     if (!isDragging) return;
@@ -172,17 +183,17 @@ async function fetchPreview() {
   const formData = new FormData(form);
 
   // get the image from "image_file" input form
-  
 
   // First HTTP POST call
-  // const response1 = await fetch('/upload', {
-  //   method: 'POST',
-  //   body: formData,
-  // });
-  // const file_json = await response1.json();
-  // const file_key = file_json.key;
+  const response1 = await fetch('/upload', {
+    method: 'POST',
+    body: formData,
+  });
+  const file_json = await response1.json();
+  file_key = file_json.key;
+  file_url = image_url;
 
-  const file_key = "2023-12-07T16-03-45-328Z-before_2.jpg"
+  // const file_key = "2023-12-01T07-11-20-845Z-before_2.jpg"
 
   var scale_factor = 2;
   for (var i = 0, length = scaling_factor_radio.length; i < length; i++) {
@@ -226,14 +237,18 @@ async function fetchPreview() {
 }
 
 async function fetchData() {
+
+  // Hide preview row
+  preview_row.style.display = 'none';
+
   // determine if the user is uploading an image or using an image url
-  const image_url = document.getElementById('image_url').value;
-  const image_file = document.getElementById('image_file').value;
-  // console.log(image_url, image_file);
-  if (image_url === '' && image_file === '') {
-    alert('Please enter an image url or upload an image');
-    return;
-  }
+  // const image_url = document.getElementById('image_url').value;
+  // const image_file = document.getElementById('image_file').value;
+  // // console.log(image_url, image_file);
+  // if (image_url === '' && image_file === '') {
+  //   alert('Please enter an image url or upload an image');
+  //   return;
+  // }
   
 
   application_state = 1;
@@ -243,17 +258,17 @@ async function fetchData() {
   getStatus();
   processing_status_row.style.display = 'block';
   const clientId = getCookie('client_id');
-  const form = document.getElementById('uploadForm');
-  const formData = new FormData(form);
-  // First HTTP POST call
-  const response1 = await fetch('/upload', {
-    method: 'POST',
-    body: formData,
-  });
-  const file_json = await response1.json();
+  // const form = document.getElementById('uploadForm');
+  // const formData = new FormData(form);
+  // // First HTTP POST call
+  // const response1 = await fetch('/upload', {
+  //   method: 'POST',
+  //   body: formData,
+  // });
+  // const file_json = await response1.json();
 
-  // console.log('Data from endpoint1:', file_json);
-  const file_key = file_json.key;
+  // // console.log('Data from endpoint1:', file_json);
+  // const file_key = file_json.key;
 
   var scale_factor = 2;
   const upscaler = get_scaling_method();
@@ -281,7 +296,7 @@ async function fetchData() {
       "extras_upscaler_2_visibility": 0,
       "upscale_first": false,
       "imagePath": file_key,
-      "imageURL": image_url,
+      "imageURL": file_url,
       "client_id": clientId
     })
   }).then(response => {
@@ -380,32 +395,32 @@ function downloadImage() {
 
 //////////////////////////////// server down timer
 // Set the target date and time
-var countDownDate = new Date();
-countDownDate.setFullYear(2023, 11, 9);
+// var countDownDate = new Date();
+// countDownDate.setFullYear(2023, 11, 9);
 
-// Update the countdown every 1 second
-var countdownInterval = setInterval(function() {
-  // Get the current date and time
-  var now = new Date().getTime();
+// // Update the countdown every 1 second
+// var countdownInterval = setInterval(function() {
+//   // Get the current date and time
+//   var now = new Date().getTime();
 
-  // Find the distance between now and the countdown date
-  var distance = countDownDate - now;
+//   // Find the distance between now and the countdown date
+//   var distance = countDownDate - now;
 
-  // Calculate days, hours, minutes, and seconds
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+//   // Calculate days, hours, minutes, and seconds
+//   var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+//   var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+//   var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+//   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-  // Display the result in the element with id="countdown"
-  document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+//   // Display the result in the element with id="countdown"
+//   document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
-  // If the countdown is finished, write some text 
-  if (distance < 0) {
-    clearInterval(countdownInterval);
-    document.getElementById("countdown").innerHTML = "EXPIRED";
-  }
-}, 1000);
+//   // If the countdown is finished, write some text 
+//   if (distance < 0) {
+//     clearInterval(countdownInterval);
+//     document.getElementById("countdown").innerHTML = "EXPIRED";
+//   }
+// }, 1000);
 
 // Use the function
 // createImageComparisonSlider('image1.jpg', 'image2.jpg');
