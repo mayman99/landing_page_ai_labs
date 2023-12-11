@@ -32,7 +32,6 @@ let application_state = 0;
 let file_key = '';
 let file_url = '';
 
-
 // Clean everything to be ready for a second run
 function clean() {
   file_key = '';
