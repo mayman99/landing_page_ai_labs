@@ -64,43 +64,41 @@
       Resolution Boost
     </a>
   </nav>
-  <div class="container">
+  <div class="container" id="main_container">
 
     <div class="row p-3">
       <h1 class="fs-1 text-center">Boost Images Resolution</h1>
     </div>
     <!-- <div class="row p-3">
-      <h1 class="fs-5 text-center text-muted">Upscaling huge images is currently disabled due to technical issues we are
-        working on</h1>
+      <h1 class="fs2 text-center">Offline</h1>
       <h3 class="fs-5 text-center text-muted">Should be up in:</h3>
       <div class="fs-5 text-center" id="countdown"></div>
     </div> -->
     <div class="row p-3">
-      <div class="card">
-        <!-- <div class="card-header">
-        Inputs
-      </div> -->
+      <div class="card" id="main_card">
+        <div class="row p-3" id="interactive_example_row">
+          <div >
+          </div>
+          <p class="card-text text-center"><small class="text-body-secondary">move the white bar to see before and after</small></p>
+        </div>
         <div class="card-body">
           <!-- <p class="card-text">Upload image to get started</p> -->
-          <div class="row p-1">
+          <div class="row p-1" id="image_input_row">
             <form action="/upload" id="uploadForm" method="post" enctype="multipart/form-data"
               onsubmit="return validateInput()">
-              <h5 class="card-title">The image is less than 40Mb and 4096x4096? Upload</h5>
+              <h5 class="card-title text-center">Less than 40Mb and 4096x4096?</h5>
               <div class="input-group mb-3">
                 <input id="image_file" type="file" name="image" accept="*" class="form-control">
               </div>
-              <p class="card-text"><small class="text-body-secondary">input limits: 40Mb and 4096x4096</small></p>
-
-              <h5 class="card-title">For Images up to 1Gb and 64000x64000? Provide a link</h5>
+              <!-- <p class="card-text text-center"><small class="text-body-secondary">input limits: 40Mb and 4096x4096</small></p> -->
+              <h5 class="card-title text-center">Up to 1Gb and 64000x64000?</h5>
               <div class="input-group mb-3">
-                <input id="image_url" type="text" name="image_url" class="form-control" pattern="https?://.+"
+                <input id="image_url" type="text" placeholder="https://google.com/images/image_12121.png" name="image_url" class="form-control" pattern="https?://.+"
                   title="Please enter a valid URL">
               </div>
-              <p class="card-text"><small class="text-body-secondary">input limits: 1Gb and 64000x64000</small></p>
-              <!-- <input type="submit" value="Submit"> -->
             </form>
           </div>
-          <div class="row p-1">
+          <div class="row p-1" id="scaling_factor_row">
             <p class="fs-3 text-left">Select the scaling factor to use</p>
             <div class="col">
               <div class="form-check form-check-inline">
@@ -130,7 +128,14 @@
             </div>
           </div>
         </div>
-        <div id="preview_row">
+        <div id="preview_row" style="display: none;">
+          <!-- <div class="row"> -->
+          <p class="fs-3 text-center">Select a scaling methode</p>
+          <!-- </div> -->
+          <!-- <div class="row"> -->
+          <button class="btn btn-success btn-block text-center" type="button" id="preview_again_button"
+            onclick="fetchPreview()"><i class="bi bi-bootstrap-reboot"></i>View a different part</button>
+          <!-- </div> -->
         </div>
         <div class="row p-1">
           <button class="btn btn-success btn-block btn-lg" style="display: none;" type="button" id="upscale_button"
@@ -141,13 +146,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="card">
-      <div class="card-header">
-      Inputs
-    </div>
-      <div class="card-body"> -->
-
     <div class="row" id="processing_status_row" style="display: none;">
       <p id="status" class="fs-1 text-center">Uploading</p>
       <div class="progress">
@@ -165,28 +163,6 @@
     <div class="row p-3" id="coffee_row" style="display: none;">
       <a href="https://www.buymeacoffee.com/lyth" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
     </div>
-    <div class="row text-center" id="example_row">
-      <div class="col-lg-5 col-md-5 col-sm-12">
-        <div class="card">
-          <img src="/assets/img/before_2.jpg" class="card-img-top" alt="...">
-          <div class="card-body">
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-2 col-sm-12">
-        <div class="card d-flex align-items-center justify-content-center" style="height: 100%;">
-          <i class="fas fa-arrow-right fa-3x"></i>
-        </div>
-      </div>
-      <div class="col-lg-5 col-md-5 col-sm-12">
-        <div class="card">
-          <img src="/assets/img/after_2.png" class="card-img-top" alt="...">
-          <div class="card-body">
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="footer"> -->
     <div class="row p-3">
       <div class="card-footer text-body-secondary text-center" style="margin-top: 40px;">
         <a href="https://twitter.com/followtherobot_" target="_blank">
@@ -196,7 +172,6 @@
         info@aifast.de
       </div>
     </div>
-    <!-- </div> -->
   </div>
 
   <!-- Vendor JS Files -->
