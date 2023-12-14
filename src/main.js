@@ -1,7 +1,7 @@
 import { createExampleImageComparisonSlider, getCookie, createImageComparisonSlider } from './utils.js';
 
 // const baseURL = "http://92.220.132.213:40045"
-const baseURL = "https://91514bdcf5e72f5983.gradio.live"
+const baseURL = "https://bc3534ffb2fa1e992e.gradio.live"
 // const baseURL = "http://localhost:7860"
 // const baseURL = "https://5c91-31-143-212-101.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
@@ -39,9 +39,9 @@ const upscaling_options = [{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESR
 { 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 },
 { 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.2 },
 { 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.3 },
-{ 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': 'LDSR', 'extras_upscaler_2_visibility': 0.25 },
-{ 'upscaler_1': 'LDSR', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.25 },
-{ 'upscaler_1': 'LDSR', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 }
+{ 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.25 },
+{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.25 },
+{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 }
 ];
 
 let application_state = 0;
@@ -164,13 +164,14 @@ async function fetchPreview(scale_factor) {
   }).then(data => {
     const images = data.images;
     const original_image = data.original_image;
+    const etas = data.etas;
     // remove preview row div elements
     let all_divs = preview_row.querySelectorAll("div");
     for (let index = 0; index < all_divs.length; index++) {
       all_divs[index].innerHTML = "";
     }
     for (var i = 0; i < images.length; i++) {
-      createImageComparisonSlider(preview_row, original_image, images[i], i, image_extention);
+      createImageComparisonSlider(preview_row, original_image, images[i], i, etas[i], image_extention);
     }
     previewView();
   }).catch(function () {

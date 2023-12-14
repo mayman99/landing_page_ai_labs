@@ -93,7 +93,7 @@ export function getCookie(name) {
     return null;
   }
   
-export function createImageComparisonSlider(parent, image2, image1, index, img_ext = 'png', width = '720px', height = '360px') {
+export function createImageComparisonSlider(parent, image2, image1, index, eta, img_ext = 'png', width = '720px', height = '360px') {
     parent.style.justifyContent = 'center';
     parent.style.display = 'flex';
     parent.style.alignItems = 'center';
@@ -128,10 +128,7 @@ export function createImageComparisonSlider(parent, image2, image1, index, img_e
     img1.style.width = '100%';
     img1.style.height = '100%';
     img1.style.objectFit = 'cover';
-  
-    // container.style.width = img1.naturalWidth.toString() + 'px';
-    // container.style.height = img1.naturalHeight.toString() + 'px';
-  
+
     let img2 = document.createElement('img');
     img2.src = `data:image/${img_ext};base64,${image2}`;
     img2.style.position = 'absolute';
@@ -160,6 +157,16 @@ export function createImageComparisonSlider(parent, image2, image1, index, img_e
   
     // Add the container to the wrapper
     wrapper.appendChild(container);
+
+    // Create the ETA text
+    let etaText = document.createElement('div');
+    etaText.textContent = eta + 's';
+    etaText.style.color = 'green';
+    etaText.style.marginLeft = '20px';
+    etaText.style.alignSelf = 'center';
+
+    // Add the ETA text to the wrapper
+    wrapper.appendChild(etaText);
   
     // Add the wrapper to the body
     parent.appendChild(wrapper);
