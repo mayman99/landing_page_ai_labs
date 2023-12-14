@@ -93,7 +93,7 @@ export function getCookie(name) {
     return null;
   }
   
-export function createImageComparisonSlider(parent, image2, image1, index, img_ext = 'png') {
+export function createImageComparisonSlider(parent, image2, image1, index, img_ext = 'png', width = '720px', height = '360px') {
     parent.style.justifyContent = 'center';
     parent.style.display = 'flex';
     parent.style.alignItems = 'center';
@@ -119,8 +119,8 @@ export function createImageComparisonSlider(parent, image2, image1, index, img_e
     let container = document.createElement('div');
     container.style.position = 'relative';
     container.style.overflow = 'hidden';
-    container.style.width = '450px';
-    container.style.height = '300px';
+    container.style.width = width;
+    container.style.height = height;
   
     let img1 = document.createElement('img');
     img1.src = `data:image/${img_ext};base64,${image1}`;
