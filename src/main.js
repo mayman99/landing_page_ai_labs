@@ -1,9 +1,9 @@
 import { createExampleImageComparisonSlider, getCookie, createImageComparisonSlider } from './utils.js';
 
 // const baseURL = "http://92.220.132.213:40045"
-// const baseURL = "https://9edec9f1e759c3decd.gradio.live"
+const baseURL = "https://91514bdcf5e72f5983.gradio.live"
 // const baseURL = "http://localhost:7860"
-const baseURL = "https://5c91-31-143-212-101.ngrok-free.app"
+// const baseURL = "https://5c91-31-143-212-101.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
 const preUpscaleAPI = baseURL + "/sdapi/v1/upscale-preview";
 const statusAPI = baseURL + "/sdapi/v1/progress";
@@ -26,7 +26,7 @@ const preview_button = document.getElementById('preview_button');
 const interactive_example_row = document.getElementById('interactive_example_row');
 const image_input_row = document.getElementById('image_input_row');
 const scaling_factor_row = document.getElementById('scaling_factor_row');
-let image_extention = 'png';
+let image_extention = '';
 const clientId = getCookie('client_id');
 let scale_factor = 2;
 
@@ -39,6 +39,9 @@ const upscaling_options = [{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESR
 { 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 },
 { 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.2 },
 { 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.3 },
+{ 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': 'LDSR', 'extras_upscaler_2_visibility': 0.25 },
+{ 'upscaler_1': 'LDSR', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.25 },
+{ 'upscaler_1': 'LDSR', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 }
 ];
 
 let application_state = 0;
