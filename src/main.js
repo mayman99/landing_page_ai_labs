@@ -1,9 +1,9 @@
 import { createExampleImageComparisonSlider, getCookie, createImageComparisonSlider } from './utils.js';
 
 // const baseURL = "http://92.220.132.213:40045"
-const baseURL = "https://9edec9f1e759c3decd.gradio.live"
+// const baseURL = "https://9edec9f1e759c3decd.gradio.live"
 // const baseURL = "http://localhost:7860"
-// const baseURL = "https://5c91-31-143-212-101.ngrok-free.app"
+const baseURL = "https://5c91-31-143-212-101.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
 const preUpscaleAPI = baseURL + "/sdapi/v1/upscale-preview";
 const statusAPI = baseURL + "/sdapi/v1/progress";
@@ -33,7 +33,13 @@ let scale_factor = 2;
 const status = ['Uploading', 'In Queue', 'Pre Processing', 'Scaling', 'Post Processing', 'Ready for Download'];
 const upscalers = ['R-ESRGAN 4x+', 'R-ESRGAN 4x+ Anime6B', '4x-UltraSharp'];
 
-const upscaling_options = {'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': 'R-ESRGAN 4x+', 'gfpgan_visibility': 0.2, 'codeformer_visibility': 0.1, 'codeformer_weight': 0 };
+const upscaling_options = [{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.2 },
+{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.5 },
+{ 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.2 },
+{ 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 },
+{ 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.2 },
+{ 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.3 },
+];
 
 let application_state = 0;
 let file_key = '';
@@ -79,10 +85,10 @@ function get_scaling_method() {
 
   let imageComparisonSlider = document.getElementsByName('imageComparisonSlider');
   let selected_index = -1;
-  for (var i = 0, length = imageComparisonSlider.length; i < length; i++) { 
+  for (var i = 0, length = imageComparisonSlider.length; i < length; i++) {
     if (imageComparisonSlider[i].checked) {
       selected_index = imageComparisonSlider[i].value;
-      return upscalers[selected_index];
+      return upscaling_options[selected_index];
     }
   }
   return -1;
@@ -117,7 +123,7 @@ async function preview() {
     });
     const file_json = await response1.json();
     file_key = file_json.key;
-  }else{
+  } else {
     image_extention = image_url.split('.').pop();
   }
 
@@ -130,10 +136,10 @@ async function preview() {
       break;
     }
   }
-  await fetchPreview();
+  console.log(upscaling_options)
+  await fetchPreview(scale_factor);
 }
-
-async function fetchPreview() {
+async function fetchPreview(scale_factor) {
   fetch(preUpscaleAPI, {
     method: "POST",
     headers: {
@@ -141,7 +147,7 @@ async function fetchPreview() {
     },
     body: JSON.stringify({
       "upscaling_resize": scale_factor,
-      "upscalers_list": upscalers,
+      "upscalers_params": upscaling_options,
       "imageKey": file_key,
       "imageURL": file_url,
       "client_id": clientId
@@ -161,10 +167,10 @@ async function fetchPreview() {
       all_divs[index].innerHTML = "";
     }
     for (var i = 0; i < images.length; i++) {
-      createImageComparisonSlider(preview_row, original_image ,images[i], i, image_extention);
+      createImageComparisonSlider(preview_row, original_image, images[i], i, image_extention);
     }
     previewView();
-  }).catch(function() {
+  }).catch(function () {
     // TODO: stop the progress bar and show there was an error
     errorHandler();
     console.log("Fetch error");
@@ -206,25 +212,20 @@ function resultReadyView() {
 }
 
 // In your JavaScript file
-document.querySelector('#upscale_button').addEventListener('click', async function() {
+document.querySelector('#upscale_button').addEventListener('click', async function () {
   application_state = 1;
 
   getStatus();
   processing_status_row.style.display = 'block';
   const clientId = getCookie('client_id');
 
-  var scale_factor = 2;
-  const upscaler = get_scaling_method();
-  if (upscaler === -1) {
+  const upscaler_params = get_scaling_method();
+  console.log(upscaler_params);
+  if (upscaler_params === -1) {
     alert('Please select an upscaler');
     return;
   }
-  for (var i = 0, length = scaling_factor_radio.length; i < length; i++) {
-    if (scaling_factor_radio[i].checked) {
-      scale_factor = scaling_factor_radio[i].value;
-      break;
-    }
-  }
+
   fetch(upscaleAPI, {
     method: "POST",
     headers: {
@@ -233,14 +234,14 @@ document.querySelector('#upscale_button').addEventListener('click', async functi
     body: JSON.stringify({
       "resize_mode": 0,
       "show_extras_results": false,
-      "gfpgan_visibility": 0.2,
-      "codeformer_visibility": 0.1,
+      "gfpgan_visibility": 0,
+      "codeformer_visibility": 0,
       "codeformer_weight": 0,
       "upscaling_resize": scale_factor,
       "upscaling_crop": true,
-      "upscaler_1": upscaler,
-      "upscaler_2": upscaler,
-      "extras_upscaler_2_visibility": 0,
+      "upscaler_1": upscaler_params["upscaler_1"],
+      "upscaler_2": upscaler_params["upscaler_2"],
+      "extras_upscaler_2_visibility": upscaler_params["extras_upscaler_2_visibility"],
       "upscale_first": false,
       "imagePath": file_key,
       "imageURL": file_url,
@@ -259,10 +260,10 @@ document.querySelector('#upscale_button').addEventListener('click', async functi
       const image_name = data.imagePath;
       const newFileName = image_name + '.zip';
       downloadLink.href = '/download/' + newFileName;
-    }else{
+    } else {
       statusText.innerHTML = 'Error occured please contact us';
     }
-  }).catch(function() {
+  }).catch(function () {
     errorHandler();
     console.log("Fetch error");
   });
@@ -285,7 +286,7 @@ async function getStatus() {
       const data = await response.json();
       // console.log('Data from endpoint3:', data);
 
-      if (data.client_position === -1){
+      if (data.client_position === -1) {
         if (application_state === 1) {
           // console.log('Uploading');
           statusText.innerHTML = 'Uploading';
@@ -299,7 +300,7 @@ async function getStatus() {
           download_btn.disabled = false;
           application_state = 0;
         }
-      } 
+      }
       else if (data.client_position === 0) {
 
         // console.log('Position in Queue is 0');
