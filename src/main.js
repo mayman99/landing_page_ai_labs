@@ -39,9 +39,8 @@ const upscaling_options = [{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESR
 { 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 },
 { 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.2 },
 { 'upscaler_1': 'R-ESRGAN 4x+ Anime6B', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.3 },
-{ 'upscaler_1': 'R-ESRGAN 4x+', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.25 },
-{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.25 },
-{ 'upscaler_1': '4x-UltraSharp', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 }
+{ 'upscaler_1': 'LDSR', 'upscaler_2': 'R-ESRGAN 4x+', 'extras_upscaler_2_visibility': 0.25 },
+{ 'upscaler_1': 'LDSR', 'upscaler_2': '4x-UltraSharp', 'extras_upscaler_2_visibility': 0.5 }
 ];
 
 let application_state = 0;
