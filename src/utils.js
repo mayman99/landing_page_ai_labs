@@ -104,7 +104,9 @@ export function createImageComparisonSlider(parent, image2, image1, index, eta, 
     wrapper.style.alignItems = 'center';
     wrapper.style.justifyContent = 'center';
     wrapper.style.display = 'flex';
-  
+    wrapper.style.cursor = 'pointer'; // Make the wrapper look clickable
+    wrapper.classList.add('wrapper'); // Add a class to the wrapper for easy selection
+
     // Create the radio button and label
     let radioButton = document.createElement('input');
     radioButton.type = 'radio';
@@ -158,9 +160,13 @@ export function createImageComparisonSlider(parent, image2, image1, index, eta, 
     // Add the container to the wrapper
     wrapper.appendChild(container);
 
+    // convert each eta from seconds to minutes and seconds and round to nearest second
+    let minutes = Math.floor(eta / 60);
+    let seconds = Math.round(eta % 60);
+
     // Create the ETA text
     let etaText = document.createElement('div');
-    etaText.textContent = eta + 's';
+    etaText.textContent = minutes + 'm ' + seconds + 's';
     etaText.style.color = 'green';
     etaText.style.marginLeft = '20px';
     etaText.style.alignSelf = 'center';
@@ -201,5 +207,17 @@ export function createImageComparisonSlider(parent, image2, image1, index, eta, 
     document.addEventListener('touchmove', handleDragMove);
     document.addEventListener('mouseup', handleDragEnd);
     document.addEventListener('touchend', handleDragEnd);
+    // Set up the event listeners
+    wrapper.addEventListener('click', function() {
+        // Deselect all other wrappers
+        let wrappers = document.querySelectorAll('.wrapper');
+        wrappers.forEach(function(wrapper) {
+            wrapper.classList.remove('selected');
+        });
+    
+        // Select the clicked wrapper
+        this.classList.add('selected');
+        this.querySelector('input').checked = true;
+    });
   }
   

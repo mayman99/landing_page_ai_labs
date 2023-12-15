@@ -1,7 +1,7 @@
 import { createExampleImageComparisonSlider, getCookie, createImageComparisonSlider } from './utils.js';
 
 // const baseURL = "http://92.220.132.213:40045"
-const baseURL = "https://bc3534ffb2fa1e992e.gradio.live"
+const baseURL = "https://4288bb3c4bb0abe9db.gradio.live"
 // const baseURL = "http://localhost:7860"
 // const baseURL = "https://5c91-31-143-212-101.ngrok-free.app"
 const upscaleAPI = baseURL + "/sdapi/v1/upscale";
@@ -139,7 +139,7 @@ async function preview() {
       break;
     }
   }
-  console.log(upscaling_options)
+  console.log(upscaling_options);
   await fetchPreview(scale_factor);
 }
 async function fetchPreview(scale_factor) {
@@ -171,7 +171,7 @@ async function fetchPreview(scale_factor) {
       all_divs[index].innerHTML = "";
     }
     for (var i = 0; i < images.length; i++) {
-      createImageComparisonSlider(preview_row, original_image, images[i], i, etas[i], image_extention);
+      createImageComparisonSlider(preview_row, original_image, images[i], i, etas[i]+1, image_extention);
     }
     previewView();
   }).catch(function () {
@@ -192,6 +192,7 @@ document.querySelector('#preview_button').addEventListener('click', function () 
 });
 
 document.querySelector('#preview_again_button').addEventListener('click', function () {
+  this.disabled = true;
   fetchPreview();
 });
 
